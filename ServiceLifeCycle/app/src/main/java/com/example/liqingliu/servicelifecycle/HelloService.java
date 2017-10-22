@@ -2,18 +2,24 @@ package com.example.liqingliu.servicelifecycle;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import java.util.Random;
+
 public class HelloService extends Service {
     private static final String TAG = "HelloService";
+
+    private final IBinder mBinder = new LocalBinder();
+    private final Random random = new Random();
     public HelloService() {
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         Log.i(TAG,"onBind");
-        return new MyBinder();
+        return mBinder;
     }
 
     @Override
@@ -38,5 +44,15 @@ public class HelloService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.i(TAG,"onDestroy");
+    }
+
+    public int getRandomNumber(){
+        return random.nextInt(100);
+    }
+
+    public class LocalBinder extends Binder {
+        public HelloService getService(){
+            return HelloService.this;
+        }
     }
 }

@@ -23,6 +23,12 @@
         android:text="bindService" />
 
     <Button
+        android:id="@+id/getBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="getRandomNumber" />
+
+    <Button
         android:id="@+id/unbindBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
