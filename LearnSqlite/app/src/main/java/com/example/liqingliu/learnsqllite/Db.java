@@ -16,8 +16,10 @@ public class Db extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE User(name Text DEFAULT \"\"," +
-                     "age TEXT DEFAULT \"\"" +
+        String sql = "CREATE TABLE User(" +
+                        "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "name Text DEFAULT \"\"," +
+                        "age TEXT DEFAULT \"\"" +
                      ")";
         db.execSQL(sql);
     }
