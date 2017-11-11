@@ -1,9 +1,12 @@
 package com.example.liqingliu.newsapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -31,5 +34,15 @@ public class MainActivity extends Activity {
         };
 
         HttpUtils.getData("http://192.168.2.107/php/news.php",handler);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NewsItem item = (NewsItem)parent.getAdapter().getItem(position);
+                Intent i = new Intent(MainActivity.this,Main2Activity.class);
+                i.putExtra("contentUrl",item.getContentUrl());
+                startActivity(i);
+            }
+        });
     }
 }
