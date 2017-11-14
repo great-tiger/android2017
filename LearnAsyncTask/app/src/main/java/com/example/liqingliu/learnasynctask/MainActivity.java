@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
                             connection.connect();
                             int total = connection.getContentLength();
                             InputStream inputStream = connection.getInputStream();
+                            //字节到字符的转化
                             InputStreamReader iReader = new InputStreamReader(inputStream);
                             BufferedReader reader = new BufferedReader(iReader);
                             System.out.println("-->"+reader.readLine());
