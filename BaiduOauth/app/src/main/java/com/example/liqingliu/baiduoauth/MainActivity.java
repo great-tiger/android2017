@@ -12,6 +12,7 @@ import com.baidu.api.Baidu;
 import com.baidu.api.BaiduDialog;
 import com.baidu.api.BaiduDialogError;
 import com.baidu.api.BaiduException;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 
@@ -55,7 +56,9 @@ public class MainActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tvResult.setText(s);
+                        Gson gson = new Gson();
+                        UserInfo info = gson.fromJson(s,UserInfo.class);
+                        tvResult.setText(info.getUsername());
                     }
                 });
             }
@@ -110,5 +113,21 @@ public class MainActivity extends Activity {
         } catch (BaiduException e) {
             e.printStackTrace();
         }
+    }
+
+    public class UserInfo{
+        public UserInfo(){
+
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        String username;
     }
 }
