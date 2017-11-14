@@ -13,7 +13,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MainActivity extends Activity {
@@ -33,12 +32,17 @@ public class MainActivity extends Activity {
                         try {
                             URL url = new URL(params[0]);
                             HttpURLConnection connection =(HttpURLConnection)url.openConnection();
-                            InputStream inputStream = connection.getInputStream();
-                            OutputStream outputStream = connection.getOutputStream();
-                            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
+
+                            //java.io.FileNotFoundException getInputStream 这个异常是因为服务器不支持POST造成的
+                            connection.setDoOutput(true);
                             connection.setRequestMethod("POST");
+                            OutputStream outputStream = connection.getOutputStream();
+                            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream,"utf-8"));
                             bufferedWriter.write("username=clh&password=test");
                             bufferedWriter.flush();
+                            bufferedWriter.close();
+
+                            InputStream inputStream = connection.getInputStream();
                             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                             String line = null;
@@ -61,7 +65,7 @@ public class MainActivity extends Activity {
                         System.out.println(s);
                         super.onPostExecute(s);
                     }
-                }.execute("http://fanyi.youdao.com/openapi.do?keyfrom=%3Ckeyfrom%3E&key=%3Ckey%3E&type=data&doctype=%3Cdoctype%3E&version=1.1&q=%E8%A6%81%E7%BF%BB%E8%AF%91%E7%9A%84%E6%96%87%E6%9C%AC");
+                }.execute("http://10.0.2.2:3000");
             }
         });
     }
