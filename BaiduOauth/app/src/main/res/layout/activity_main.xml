@@ -4,10 +4,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <Button
         android:onClick="startOauth"
+        android:text="授权"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btnGetinfo"
+        android:text="获取用户信息"
+        android:onClick="getInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnGetinfoAsync"
+        android:text="异步获取用户信息"
+        android:onClick="getInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/tvResult"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

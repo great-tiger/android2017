@@ -2,25 +2,74 @@ package com.example.liqingliu.baiduoauth;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.baidu.api.AsyncBaiduRunner;
 import com.baidu.api.Baidu;
 import com.baidu.api.BaiduDialog;
 import com.baidu.api.BaiduDialogError;
 import com.baidu.api.BaiduException;
+
+import java.io.IOException;
+
 
 public class MainActivity extends Activity {
 
     Baidu baidu;
     TextView tvResult;
     String appKey="lIvw2fIs521r8toy0xa7LElR";
+    Button btnGetinfo;
+    Button btnGetinfoAsync;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         baidu = new Baidu(appKey,this);
         tvResult = findViewById(R.id.tvResult);
+        btnGetinfo = findViewById(R.id.btnGetinfo);
+        btnGetinfoAsync = findViewById(R.id.btnGetinfoAsync);
+        btnGetinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getInfo(v);
+            }
+        });
+        btnGetinfoAsync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getInfoAsync(v);
+            }
+        });
+    }
+
+    private void getInfoAsync(View v) {
+        AsyncBaiduRunner runner = new AsyncBaiduRunner(baidu);
+        runner.request("https://openapi.baidu.com/rest/2.0/passport/users/getInfo", null, "GET", new AsyncBaiduRunner.RequestListener() {
+            @Override
+            public void onComplete(final String s) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvResult.setText(s);
+                    }
+                });
+            }
+
+            @Override
+            public void onIOException(IOException e) {
+
+            }
+
+            @Override
+            public void onBaiduException(BaiduException e) {
+
+            }
+        });
     }
 
     public void startOauth(View view){
@@ -50,5 +99,16 @@ public class MainActivity extends Activity {
 
             }
         });
+    }
+
+    public void getInfo(View view){
+        try {
+            String result = baidu.request("https://openapi.baidu.com/rest/2.0/passport/users/getInfo",null,"GET");
+            tvResult.setText(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (BaiduException e) {
+            e.printStackTrace();
+        }
     }
 }
