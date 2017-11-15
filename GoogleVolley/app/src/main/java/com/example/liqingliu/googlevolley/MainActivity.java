@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
     Button btn2;
     Button btn3;
     Button btn4;
+    Button btn5;
     TextView detail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class MainActivity extends Activity {
         btn2 = findViewById(R.id.btn2);
         btn3 = findViewById(R.id.btn3);
         btn4 = findViewById(R.id.btn4);
+        btn5 = findViewById(R.id.btn5);
         detail = findViewById(R.id.detail);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +61,16 @@ public class MainActivity extends Activity {
                 jsonArrayRequest(v);
             }
         });
+        btn5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customRequest(v);
+            }
+        });
+    }
+
+    private void customRequest(View v) {
+
     }
 
     private void jsonArrayRequest(View v) {
