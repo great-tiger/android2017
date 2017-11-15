@@ -14,6 +14,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,7 +71,20 @@ public class MainActivity extends Activity {
     }
 
     private void customRequest(View v) {
-
+        String url = "http://10.0.2.2:5000/get_json";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        GsonRequest<UserInfo> gsonRequest = new GsonRequest<>(url, UserInfo.class, null, new Response.Listener<UserInfo>() {
+            @Override
+            public void onResponse(UserInfo response) {
+                detail.setText(response.getUsername()+" : "+response.getPassword());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                detail.setText(error.getMessage());
+            }
+        });
+        requestQueue.add(gsonRequest);
     }
 
     private void jsonArrayRequest(View v) {
