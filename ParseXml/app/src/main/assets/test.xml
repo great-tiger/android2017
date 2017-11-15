@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<languages cat="it">
+    <lan>
+        <id>1</id>
+        <name>C#</name>
+        <tool>VS</tool>
+    </lan>
+    <lan>
+        <id>2</id>
+        <name>Swift</name>
+        <tool>Xcode</tool>
+    </lan>
+    <lan>
+        <id>3</id>
+        <name>Java</name>
+        <tool>Eclipse</tool>
+    </lan>
+</languages>
