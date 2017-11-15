@@ -16,12 +16,14 @@ import com.android.volley.toolbox.Volley;
 public class MainActivity extends Activity {
 
     Button btn1;
+    Button btn2;
     TextView detail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btn1 = findViewById(R.id.btn1);
+        btn2 = findViewById(R.id.btn2);
         detail = findViewById(R.id.detail);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,6 +31,30 @@ public class MainActivity extends Activity {
                 sendSimpleRequest(v);
             }
         });
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendSetupRequest(v);
+            }
+        });
+    }
+
+    private void sendSetupRequest(View v) {
+        String url = "http://10.0.2.2:5000";
+        //MySingleton 中的图片部分以后学习
+        RequestQueue requestQueue = MySingleton.getInstance(this).getRequestQueue();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                detail.setText(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                detail.setText(error.getMessage());
+            }
+        });
+        requestQueue.add(stringRequest);
     }
 
     private void sendSimpleRequest(View v) {
