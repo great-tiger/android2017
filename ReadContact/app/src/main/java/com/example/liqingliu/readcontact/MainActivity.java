@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 
-
 public class MainActivity extends Activity {
 
     @Override
