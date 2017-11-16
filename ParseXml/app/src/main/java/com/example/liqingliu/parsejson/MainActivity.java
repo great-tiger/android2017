@@ -10,6 +10,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -52,7 +54,27 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void read() {
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(getAssets().open("test.xml"));
+            Element root = document.getDocumentElement();
+            NodeList nodeList = root.getElementsByTagName("lan");
+            for(int i = 0; i < nodeList.getLength(); i++){
+                Element lan = (Element)nodeList.item(i);
+                String id =  lan.getElementsByTagName("id").item(0).getTextContent();
+                String name = lan.getElementsByTagName("name").item(0).getTextContent();
+                String tool = lan.getElementsByTagName("tool").item(0).getTextContent();
+                System.out.println("--->>> id: "+ id + ", name: "+name + ", tool: "+tool);
+            }
 
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void create() {
